@@ -80,7 +80,16 @@ def visualize_tree(root, output_file='tree_visualization'):
             queue.append((node.left, left_id))
             thickness = scale_thickness(node.left.value, min_val, max_val)
             color = get_edge_color(node.left.value, min_val, max_val)
-            dot.edge(node_id, left_id, penwidth=str(thickness), color=color, dir='none')
+            dot.edge(
+                node_id,
+                left_id,
+                penwidth=str(thickness),
+                color=color,
+                dir='none',
+                tailport='s',  # exit from bottom center of the parent
+                headport='n'   # enter the top center of the child
+            )
+
         
         # Process right child
         if node.right:
@@ -88,7 +97,15 @@ def visualize_tree(root, output_file='tree_visualization'):
             queue.append((node.right, right_id))
             thickness = scale_thickness(node.right.value, min_val, max_val)
             color = get_edge_color(node.right.value, min_val, max_val)
-            dot.edge(node_id, right_id, penwidth=str(thickness), color=color, dir='none')
+            dot.edge(
+                node_id,
+                right_id,
+                penwidth=str(thickness),
+                color=color,
+                dir='none',
+                tailport='s',  # exit from bottom center of the parent
+                headport='n'   # enter the top center of the child
+            )
     
     # Save visualization
     try:
@@ -100,8 +117,8 @@ def visualize_tree(root, output_file='tree_visualization'):
 def main():
     # Create and populate the tree
     root = Node()
-    create_random_tree(root, 15)
-    run_through_tree(root, 5000)
+    create_random_tree(root, 20)
+    run_through_tree(root, 10000)
     
     # Generate visualization
     visualize_tree(root)
